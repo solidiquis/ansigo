@@ -30,3 +30,7 @@ func EraseUp() {
 func EraseScreen() {
 	fmt.Printf(SCREEN_ESC, 2)
 }
+
+func Backspace() {
+	fmt.Print("\b \b")
+}
