@@ -33,4 +33,4 @@ func main() {
 	}
 }
 ```
-<img src="https://github.com/solidiquis/ansigo/blob/master/assets/ansigo_demo.gif?raw=true">
+<img src="https://github.com/solidiquis/solidiquis/blob/master/assets/ansigo_demo.gif?raw=true">
