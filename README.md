@@ -1,6 +1,11 @@
 # ansigo
 A library to make the controlling of ANSI terminal emulators' fonts, colors, and cursors, a little less painful.
 
+## Installation
+```
+$ go get github.com/solidiquis/ansigo
+```
+
 ## Demo
 Moving the cursor around the screen Vim-style:
 ```go
