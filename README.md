@@ -17,8 +17,6 @@ import (
 
 func main() {
 	ansi.EraseScreen()
-	ansi.UnbufferStdin()
-	ansi.UnechoStdin()
 	ansi.CursorSetPos(0, 0)
 
 	stdin := make(chan string, 1)
