@@ -6,6 +6,7 @@ import (
 	"os/exec"
 )
 
+// TerminalDimensions returns the the columns and rows of the current active window.
 func TerminalDimensions() (int, int, error) {
 	ws, err := unix.IoctlGetWinsize(int(os.Stdout.Fd()), unix.TIOCGWINSZ)
 	if err != nil {
@@ -15,19 +16,15 @@ func TerminalDimensions() (int, int, error) {
 	return int(ws.Col), int(ws.Row), nil
 }
 
-func UnbufferStdin() {
-	exec.Command("stty", "-f", "/dev/tty", "cbreak", "min", "1").Run()
-}
-
-func UnechoStdin() {
-	exec.Command("stty", "-f", "/dev/tty", "-echo").Run()
-}
-
+// EchoStdin prints user input.
 func EchoStdin() {
 	exec.Command("stty", "-f", "/dev/tty", "echo").Run()
 }
 
+// GetChar unbuffers stdin and stops the printing of user stdin input.
 func GetChar(stdin chan string) {
+	unbufferStdin()
+	unechoStdin()
 	b := make([]byte, 1)
 	for {
 		os.Stdin.Read(b)
@@ -35,6 +32,20 @@ func GetChar(stdin chan string) {
 	}
 }
 
+// RestoreTerminalSettings undos the effects of GetChar as well as other window
+// modifications caused by various functions throughout this library such as CursorHide
 func RestoreTerminalSettings() {
 	exec.Command("stty", "sane").Run()
+}
+
+/*
+PRIVATE
+*/
+
+func unbufferStdin() {
+	exec.Command("stty", "-f", "/dev/tty", "cbreak", "min", "1").Run()
+}
+
+func unechoStdin() {
+	exec.Command("stty", "-f", "/dev/tty", "-echo").Run()
 }
