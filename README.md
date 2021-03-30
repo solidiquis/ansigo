@@ -1,6 +1,8 @@
 # ansigo
 A library to make the controlling of ANSI terminal emulators' fonts, colors, and cursors, a little less painful.
 
+Documentation can be found at https://pkg.go.dev/github.com/solidiquis/ansigo
+
 ## Installation
 ```
 $ go get github.com/solidiquis/ansigo
