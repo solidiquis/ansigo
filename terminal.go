@@ -25,10 +25,10 @@ func EchoStdin() {
 func GetChar(stdin chan string) {
 	unbufferStdin()
 	unechoStdin()
-	b := make([]byte, 1)
+	b := make([]byte, 3)
 	for {
 		os.Stdin.Read(b)
-		stdin <- string(b)
+		stdin <- key(b)
 	}
 }
 
@@ -48,4 +48,25 @@ func unbufferStdin() {
 
 func unechoStdin() {
 	exec.Command("stty", "-f", "/dev/tty", "-echo").Run()
+}
+
+func key(b []byte) string {
+	if b[0] == 27 {
+		switch b[len(b)-1] {
+		case 0:
+			return "<ESC>"
+		case 65:
+			return "<Up>"
+		case 66:
+			return "<Down>"
+		case 67:
+			return "<Right>"
+		case 68:
+			return "<Left>"
+		}
+	} else if b[0] == 10 {
+		return "<Enter>"
+	}
+
+	return string(b[0])
 }
