@@ -23,13 +23,23 @@ func EchoStdin() {
 
 // GetChar unbuffers stdin and stops the printing of user stdin input.
 func GetChar(stdin chan string) {
-	unbufferStdin()
-	unechoStdin()
+	UnbufferStdin()
+	UnechoStdin()
 	b := make([]byte, 3)
 	for {
 		os.Stdin.Read(b)
 		stdin <- key(b)
 	}
+}
+
+// Unbuffers stdin of current terminal and specifies complete input length as 1.
+func UnbufferStdin() {
+	exec.Command("stty", "-f", "/dev/tty", "cbreak", "min", "1").Run()
+}
+
+// Turns off user input echo.
+func UnechoStdin() {
+	exec.Command("stty", "-f", "/dev/tty", "-echo").Run()
 }
 
 // RestoreTerminalSettings undos the effects of GetChar as well as other window
@@ -38,20 +48,13 @@ func RestoreTerminalSettings() {
 	exec.Command("stty", "sane").Run()
 }
 
-/*
-PRIVATE
-*/
-
-func unbufferStdin() {
-	exec.Command("stty", "-f", "/dev/tty", "cbreak", "min", "1").Run()
-}
-
-func unechoStdin() {
-	exec.Command("stty", "-f", "/dev/tty", "-echo").Run()
-}
-
 func key(b []byte) string {
-	if b[0] == 27 {
+	switch b[0] {
+	case 10:
+		return "<Enter>"
+	case 127:
+		return "<Backspace>"
+	case 27:
 		switch b[len(b)-1] {
 		case 0:
 			return "<ESC>"
@@ -64,8 +67,6 @@ func key(b []byte) string {
 		case 68:
 			return "<Left>"
 		}
-	} else if b[0] == 10 {
-		return "<Enter>"
 	}
 
 	return string(b[0])

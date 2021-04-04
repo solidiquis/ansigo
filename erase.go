@@ -31,6 +31,15 @@ func EraseScreen() {
 	fmt.Printf(SCREEN_ESC, 2)
 }
 
+func EraseLineSection(row, col1, col2 int) {
+	CursorSavePos()
+	CursorSetPos(row, col2)
+	for i := 0; i < col2-col1; i++ {
+		Backspace()
+	}
+	CursorRestorePos()
+}
+
 func Backspace() {
 	fmt.Print("\b \b")
 }
