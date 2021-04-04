@@ -1,5 +1,5 @@
 # ansigo
-A library to make the controlling of ANSI terminal emulators' fonts, colors, and cursors, a little less painful.
+A library to make the controlling of ANSI terminal emulators' fonts, colors, and cursors, a little less painful — also can be used to detect key presses in the terminal.
 
 Documentation can be found at https://pkg.go.dev/github.com/solidiquis/ansigo
 
