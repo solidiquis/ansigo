@@ -8,12 +8,24 @@ func Bright(txt string) string {
 	return fmt.Sprintf(DISPLAY_ATTR, 1, txt)
 }
 
-func Underscore(txt string) string {
+func Dim(txt string) string {
+	return fmt.Sprintf(DISPLAY_ATTR, 2, txt)
+}
+
+func Italic(txt string) string {
+	return fmt.Sprintf(DISPLAY_ATTR, 3, txt)
+}
+
+func Underline(txt string) string {
 	return fmt.Sprintf(DISPLAY_ATTR, 4, txt)
 }
 
 func Hidden(txt string) string {
 	return fmt.Sprintf(DISPLAY_ATTR, 8, txt)
+}
+
+func StrikeThrough(txt string) string {
+	return fmt.Sprintf(DISPLAY_ATTR, 9, txt)
 }
 
 func FgBlack(txt string) string {
