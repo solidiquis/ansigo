@@ -10,6 +10,14 @@ func CursorDown(n int) {
 	fmt.Printf("\x1B[%dB", n)
 }
 
+func CursorUpStartLn(n int) {
+	fmt.Printf("\x1B[%dF", n)
+}
+
+func CursorDownStartLn(n int) {
+	fmt.Printf("\x1B[%dE", n)
+}
+
 func CursorForward(n int) {
 	fmt.Printf("\x1B[%dC", n)
 }
